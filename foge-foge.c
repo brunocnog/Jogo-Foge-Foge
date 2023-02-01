@@ -2,10 +2,7 @@
 #include <stdlib.h>
 #include "foge-foge.h"
 
-char **mapa;
-int linhas;
-int colunas;
-
+MAPA m;
 
 int main(){
 
@@ -35,12 +32,12 @@ void leMapa(){
         exit(1);
     }
 
-    fscanf(f, "%d %d", &linhas, &colunas);
+    fscanf(f, "%d %d", &(m.linhas), &(m.colunas));
     alocaMapa();
 
     //cria o array de linhas do detanho determinado pelo arquivo mapa.txt
     for(int i = 0; i < 5; i++){
-        fscanf(f, "%s\n", mapa[i]);
+        fscanf(f, "%s\n", m.matriz[i]);
     }
 
     fclose(f);
@@ -49,21 +46,21 @@ void leMapa(){
 void alocaMapa(){
 
     //cria uma alocação dinâmica de memória de acordo com a quantidade de linhas no arquivo mapa.txt
-    mapa = malloc(sizeof(char*) * linhas);
+    m.matriz = malloc(sizeof(char*) * m.linhas);
 
     //cria um array para alocar de forma dinâmica a quantidade de memória necessária para todas as colunas em cada linha.
     //mapa[0] = qtd de mem da linha[0] * qtd de mem da coluna [0] mais um espaço para o enter.
-    for(int i = 0; i < linhas; i++){
-        mapa[i] = malloc(sizeof(char) * colunas +1);
+    for(int i = 0; i < m.linhas; i++){
+        m.matriz[i] = malloc(sizeof(char) * m.colunas +1);
     }
 }
 
 void liberaMapa(){
 
-    for(int i = 0; i < linhas; i++){
-        free(mapa[i]);
+    for(int i = 0; i < m.linhas; i++){
+        free(m.matriz[i]);
     }
-    free(mapa);
+    free(m.matriz);
 }
 
 int acabou(){
@@ -73,8 +70,8 @@ int acabou(){
 
 void imprimeMapa(){
 
-    for(int i = 0; i < linhas; i++){
-        printf("%s\n", mapa[i]);
+    for(int i = 0; i < m.linhas; i++){
+        printf("%s\n", m.matriz[i]);
     }
 }
 
@@ -82,9 +79,9 @@ void move(char direcao){
 
     int x, y;
 
-    for(int i = 0; i < linhas; i++){
-        for(int j = 0; j < colunas; j++){
-            if(mapa[i][j] == '@'){
+    for(int i = 0; i < m.linhas; i++){
+        for(int j = 0; j < m.colunas; j++){
+            if(m.matriz[i][j] == '@'){
                 x = i;
                 y = j;
                 break;
@@ -94,18 +91,18 @@ void move(char direcao){
 
     switch (direcao){
         case 'a':
-            mapa[x][y-1] = '@';
+            m.matriz[x][y-1] = '@';
             break;
         case 'd':
-            mapa[x][y+1] = '@';
+            m.matriz[x][y+1] = '@';
             break;
         case 's':
-            mapa[x+1][y] = '@';
+            m.matriz[x+1][y] = '@';
             break;
         case 'w':
-            mapa[x-1][y] = '@';
+            m.matriz[x-1][y] = '@';
             break;
     }
-    
-    mapa[x][y] = '.';
+
+    m.matriz[x][y] = '.';
 }
