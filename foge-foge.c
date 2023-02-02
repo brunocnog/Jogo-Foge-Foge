@@ -5,10 +5,16 @@
 
 //struct mapa MAPA
 MAPA m;
+POSICAO heroi;
+
+//variáveis que guardam a posição inicial do jogador
+int x, y;
 
 int main(){
 
     leMapa(&m);
+
+    encontraMapa(&m, &heroi, '@');
 
     do {
 
@@ -31,32 +37,24 @@ int acabou(){
 
 void move(char direcao){
 
-    int x, y;
-
-    for(int i = 0; i < m.linhas; i++){
-        for(int j = 0; j < m.colunas; j++){
-            if(m.matriz[i][j] == '@'){
-                x = i;
-                y = j;
-                break;
-            }
-        }
-    }
+    m.matriz[heroi.x][heroi.y] = '.';
 
     switch (direcao){
         case 'a':
-            m.matriz[x][y-1] = '@';
+            m.matriz[heroi.x][heroi.y-1] = '@';
+            y--;
             break;
         case 'd':
-            m.matriz[x][y+1] = '@';
+            m.matriz[heroi.x][heroi.y+1] = '@';
+            y++;
             break;
         case 's':
-            m.matriz[x+1][y] = '@';
+            m.matriz[heroi.x+1][heroi.y] = '@';
+            x++;
             break;
         case 'w':
-            m.matriz[x-1][y] = '@';
+            m.matriz[heroi.x-1][heroi.y] = '@';
+            x--;
             break;
     }
-
-    m.matriz[x][y] = '.';
 }
