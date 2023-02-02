@@ -37,6 +37,13 @@ int acabou(){
 
 void move(char direcao){
 
+    if(
+        direcao !='a'&&
+        direcao !='d'&&
+        direcao !='s'&&
+        direcao !='w'
+    ) return;
+
     m.matriz[heroi.x][heroi.y] = '.';
 
     switch (direcao){
