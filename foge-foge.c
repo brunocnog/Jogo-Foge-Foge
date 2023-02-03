@@ -37,12 +37,8 @@ int acabou(){
 
 void move(char direcao){
 
-    if(
-        direcao !='a'&&
-        direcao !='d'&&
-        direcao !='s'&&
-        direcao !='w'
-    ) return;
+    if(!ehdirecao(direcao))
+        return;
 
     //variável auxiliar que guarda a próxima posição do herói para validação
     int proximoX = heroi.x;
@@ -80,4 +76,12 @@ void move(char direcao){
     heroi.x = proximoX;
     heroi.y = proximoY;
 
+}
+
+int ehdirecao(char direcao){
+    return
+        direcao !='a'||
+        direcao !='d'||
+        direcao !='s'||
+        direcao !='w';
 }
