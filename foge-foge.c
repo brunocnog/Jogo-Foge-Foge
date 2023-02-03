@@ -44,24 +44,40 @@ void move(char direcao){
         direcao !='w'
     ) return;
 
-    m.matriz[heroi.x][heroi.y] = '.';
+    //variável auxiliar que guarda a próxima posição do herói para validação
+    int proximoX = heroi.x;
+    int proximoY = heroi.y;
 
+    //caso as teclas corretas tenha sido usadas, atualiza a próxima posição do herói
     switch (direcao){
         case 'a':
-            m.matriz[heroi.x][heroi.y-1] = '@';
-            y--;
+            proximoY--;
             break;
         case 'd':
-            m.matriz[heroi.x][heroi.y+1] = '@';
-            y++;
+            proximoY++;
             break;
         case 's':
-            m.matriz[heroi.x+1][heroi.y] = '@';
-            x++;
+            proximoX--;
             break;
         case 'w':
-            m.matriz[heroi.x-1][heroi.y] = '@';
-            x--;
+            proximoX++;
             break;
     }
+
+    //valida a posição futura
+    if(proximoX >= m.linhas)
+        return;
+    if(proximoY >= m.linhas)
+        return;
+
+    //garante que a nova posição é vazia
+    if(m.matriz[proximoX][proximoY] != '.')
+        return;
+
+    //atualizando a posição do herói e marcar a posição antiga como vazia
+    m.matriz[proximoX][proximoY] = '@';
+    m.matriz[heroi.x][heroi.y] = '.';
+    heroi.x = proximoX;
+    heroi.y = proximoY;
+
 }
