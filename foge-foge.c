@@ -14,7 +14,7 @@ int main(){
 
     leMapa(&m);
 
-    encontraMapa(&m, &heroi, '@');
+    encontraMapa(&m, &heroi, HEROI);
 
     do {
 
@@ -37,7 +37,7 @@ int acabou(){
 
 void move(char direcao){
 
-    if(!ehdirecao(direcao))
+    if(!ehDirecao(direcao))
         return;
 
     //variável auxiliar que guarda a próxima posição do herói para validação
@@ -46,42 +46,36 @@ void move(char direcao){
 
     //caso as teclas corretas tenha sido usadas, atualiza a próxima posição do herói
     switch (direcao){
-        case 'a':
+        case ESQUERDA:
             proximoY--;
             break;
-        case 'd':
+        case DIREITA:
             proximoY++;
             break;
-        case 's':
+        case BAIXO:
             proximoX--;
             break;
-        case 'w':
+        case CIMA:
             proximoX++;
             break;
     }
 
-    //valida a posição futura
-    if(proximoX >= m.linhas)
-        return;
-    if(proximoY >= m.linhas)
-        return;
-
-    //garante que a nova posição é vazia
-    if(m.matriz[proximoX][proximoY] != '.')
+    if(!ehValida(&m, proximoX, proximoY))
+       return;
+    if(!ehVazia(&m, proximoX, proximoY))
         return;
 
     //atualizando a posição do herói e marcar a posição antiga como vazia
-    m.matriz[proximoX][proximoY] = '@';
-    m.matriz[heroi.x][heroi.y] = '.';
+    andaNoMapa(&m, heroi.x, heroi.y, proximoX, proximoY);
     heroi.x = proximoX;
     heroi.y = proximoY;
 
 }
 
-int ehdirecao(char direcao){
+int ehDirecao(char direcao){
     return
-        direcao !='a'||
-        direcao !='d'||
-        direcao !='s'||
-        direcao !='w';
+        direcao !=ESQUERDA||
+        direcao !=DIREITA||
+        direcao !=BAIXO||
+        direcao !=CIMA;
 }

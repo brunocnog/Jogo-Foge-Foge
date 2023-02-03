@@ -60,3 +60,26 @@ void encontraMapa(MAPA *m, POSICAO *p, char c){
         }
     }
 }
+
+//função que valida a posição futura
+int ehValida(MAPA *m, int x, int y){
+    if(x >= m->linhas)
+        return 0;
+    if(y >= m->colunas)
+        return 0;
+
+    return 1;
+}
+
+//garante que a nova posição é vazia
+int ehVazia(MAPA *m, int x, int y){
+    return m->matriz[x][y] == VAZIO;
+}
+
+//move algo que está em uma posição para a nova posição
+void andaNoMapa(MAPA *m, int xOrigem, int yOringem, int xDestino, int yDestino) {
+
+    char personagem = m->matriz[xOrigem][yOringem]; //variável auxiliar
+    m->matriz[xDestino][yDestino] = personagem;
+    m->matriz[xOrigem][yOringem] = VAZIO;
+}
