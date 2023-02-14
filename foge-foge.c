@@ -32,8 +32,9 @@ int main(){
     liberaMapa(&m);
 }
 
-int acabou(){    
-    return 0;
+int acabou(){   
+    POSICAO pos; 
+    return !encontraMapa(&m, &pos, HEROI);
 }
 
 int ehDirecao(char direcao){

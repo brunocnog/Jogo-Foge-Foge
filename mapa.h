@@ -30,6 +30,6 @@ struct posicao {
 
 typedef struct posicao POSICAO;
 
-void encontraMapa(MAPA *m, POSICAO *p, char c);
+int encontraMapa(MAPA *m, POSICAO *p, char c);
 
 

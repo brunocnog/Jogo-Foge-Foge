@@ -51,7 +51,9 @@ void imprimeMapa(MAPA *m){
     }
 }
 
-void encontraMapa(MAPA *m, POSICAO *p, char c){
+//função alterada de void para int, a fim de devolver um inteiro para ser tratado
+//como booleano (verdadeiro/falso)
+int encontraMapa(MAPA *m, POSICAO *p, char c){
     for(int i = 0; i < m->linhas; i++){
         for(int j = 0; j < m->colunas; j++){
             if(m->matriz[i][j] == c){
@@ -61,6 +63,8 @@ void encontraMapa(MAPA *m, POSICAO *p, char c){
             }
         }
     }
+    //herói não encontrado
+    return 0;
 }
 
 //função que valida a posição futura
