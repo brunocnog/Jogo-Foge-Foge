@@ -59,7 +59,7 @@ int encontraMapa(MAPA *m, POSICAO *p, char c){
             if(m->matriz[i][j] == c){
                 p->x = i;
                 p->y = j;
-                return;
+                return 1;
             }
         }
     }
