@@ -70,7 +70,7 @@ void move(char direcao){
             break;
     }
 
-    if(!podeAndar(&m, proximoX, proximoY)){
+    if(!podeAndar(&m, HEROI, proximoX, proximoY)){
         return;
     }
 
@@ -93,7 +93,7 @@ int praOndeFantasmaVai(int xAtual, int yAtual, int *xDestino, int *yDestino){
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
 
-        if(podeAndar(&m, opcoes[posicao][0], opcoes[posicao][1])){
+        if(podeAndar(&m, FANTASMA, opcoes[posicao][0], opcoes[posicao][1])){
             *xDestino = opcoes[posicao][0];
             *yDestino = opcoes[posicao][1];
             return 1;

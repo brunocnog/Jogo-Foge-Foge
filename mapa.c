@@ -77,14 +77,22 @@ int ehValida(MAPA *m, int x, int y){
     return 1;
 }
 
+int ehParede(MAPA *m, int x, int y){
+    return
+        m->matriz[x][y] == PAREDE_VERTICAL||
+        m->matriz[x][y] == PAREDE_HORIZONTAL;
+}
+
+/*
+## Função substituída pela ehParede ##
 //garante que a nova posição é vazia
 int ehVazia(MAPA *m, int x, int y){
     return m->matriz[x][y] == VAZIO;
-}
+} */
 
-int podeAndar(MAPA *m, int x, int y){
+int podeAndar(MAPA *m, char personagem, int x, int y){
     return
-        ehValida(m, x, y) && ehVazia(m, x, y);
+        ehValida(m, x, y) && !ehParede(m, x, y) && !ehPersonagem(m, personagem, x, y);
 }
 
 //move algo que está em uma posição para a nova posição
@@ -103,4 +111,9 @@ void copiaMapa(MAPA *destino, MAPA *origem){
     for(int i = 0; i < origem->linhas; i++){
         strcpy(destino->matriz[i], origem->matriz[i]);
     }
+}
+
+int ehPersonagem(MAPA *m, char personagem, int x, int y){
+    return
+        m->matriz[x][y] == personagem;
 }
