@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mapa.h"
+//#include "foge-foge.h"
 
 void leMapa(MAPA *m){
 
@@ -76,10 +78,25 @@ int ehVazia(MAPA *m, int x, int y){
     return m->matriz[x][y] == VAZIO;
 }
 
+int podeAndar(MAPA *m, int x, int y){
+    return
+        ehValida(m, x, y) && ehVazia(m, x, y);
+}
+
 //move algo que está em uma posição para a nova posição
 void andaNoMapa(MAPA *m, int xOrigem, int yOringem, int xDestino, int yDestino) {
 
     char personagem = m->matriz[xOrigem][yOringem]; //variável auxiliar
     m->matriz[xDestino][yDestino] = personagem;
     m->matriz[xOrigem][yOringem] = VAZIO;
+}
+
+//copia o mapa para comparar se os fantasmas andaram
+void copiaMapa(MAPA *destino, MAPA *origem){
+    destino->linhas = origem->linhas;
+    destino->colunas = origem->colunas;
+    alocaMapa(destino);
+    for(int i = 0; i < origem->linhas; i++){
+        strcpy(destino->matriz[i], origem->matriz[i]);
+    }
 }

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "foge-foge.h"
 #include "mapa.h"
 
@@ -13,7 +15,6 @@ int x, y;
 int main(){
 
     leMapa(&m);
-
     encontraMapa(&m, &heroi, HEROI);
 
     do {
@@ -22,17 +23,25 @@ int main(){
 
         char comando; // A S D W
         scanf(" %c", &comando);
+       
         move(comando);
+        fantasma();
 
     }while (!acabou());
 
-        liberaMapa(&m);
-
+    liberaMapa(&m);
 }
 
-int acabou(){
-    
+int acabou(){    
     return 0;
+}
+
+int ehDirecao(char direcao){
+    return
+            direcao == CIMA||
+            direcao == BAIXO||
+            direcao == DIREITA||
+            direcao == ESQUERDA;
 }
 
 void move(char direcao){
@@ -45,37 +54,71 @@ void move(char direcao){
     int proximoY = heroi.y;
 
     //caso as teclas corretas tenha sido usadas, atualiza a próxima posição do herói
-    switch (direcao){
+    switch(direcao){
         case ESQUERDA:
             proximoY--;
             break;
         case DIREITA:
             proximoY++;
             break;
-        case BAIXO:
+        case CIMA:
             proximoX--;
             break;
-        case CIMA:
+        case BAIXO:
             proximoX++;
             break;
     }
 
-    if(!ehValida(&m, proximoX, proximoY))
-       return;
-    if(!ehVazia(&m, proximoX, proximoY))
+    if(!podeAndar(&m, proximoX, proximoY)){
         return;
+    }
 
     //atualizando a posição do herói e marcar a posição antiga como vazia
     andaNoMapa(&m, heroi.x, heroi.y, proximoX, proximoY);
     heroi.x = proximoX;
     heroi.y = proximoY;
-
 }
 
-int ehDirecao(char direcao){
-    return
-        direcao !=ESQUERDA||
-        direcao !=DIREITA||
-        direcao !=BAIXO||
-        direcao !=CIMA;
+int praOndeFantasmaVai(int xAtual, int yAtual, int *xDestino, int *yDestino){
+
+    int opcoes[4][2] = {
+        {xAtual     ,   yAtual +1   },
+        {xAtual + 1 ,   yAtual      },
+        {xAtual     ,   yAtual-1    },
+        {xAtual-1   ,   yAtual      }
+    };
+
+    srand(time(0));
+    for(int i = 0; i < 10; i++){
+        int posicao = rand() % 4;
+
+        if(podeAndar(&m, opcoes[posicao][0], opcoes[posicao][1])){
+            *xDestino = opcoes[posicao][0];
+            *yDestino = opcoes[posicao][1];
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void fantasma(){
+    MAPA copia;
+
+    copiaMapa(&copia, &m);
+
+    for(int i = 0; i < copia.linhas; i++){
+        for(int j = 0; j < copia.colunas; j++){
+            if(copia.matriz[i][j] == FANTASMA){
+                
+                int xDestino;
+                int yDestino;
+                int encontrou = praOndeFantasmaVai(i, j, &xDestino, &yDestino);
+
+                if(encontrou){
+                    andaNoMapa(&m, i, j, xDestino, yDestino);
+                }
+            }
+        }
+    }
+    liberaMapa(&copia);
 }
