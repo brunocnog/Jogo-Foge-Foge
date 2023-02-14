@@ -33,8 +33,12 @@ int main(){
 }
 
 int acabou(){   
-    POSICAO pos; 
-    return !encontraMapa(&m, &pos, HEROI);
+    POSICAO pos;
+
+    int perdeu = !encontraMapa(&m, &pos, HEROI);
+    int ganhou = !encontraMapa(&m, &pos, FANTASMA);
+
+    return ganhou || perdeu;
 }
 
 int ehDirecao(char direcao){
@@ -83,10 +87,10 @@ void move(char direcao){
 int praOndeFantasmaVai(int xAtual, int yAtual, int *xDestino, int *yDestino){
 
     int opcoes[4][2] = {
-        {xAtual     ,   yAtual +1   },
-        {xAtual + 1 ,   yAtual      },
-        {xAtual     ,   yAtual-1    },
-        {xAtual-1   ,   yAtual      }
+        {xAtual     ,   yAtual+1   },
+        {xAtual+1   ,   yAtual     },
+        {xAtual     ,   yAtual-1   },
+        {xAtual-1   ,   yAtual     }
     };
 
     srand(time(0));
