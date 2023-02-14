@@ -9,8 +9,10 @@
 MAPA m;
 POSICAO heroi;
 
-//variáveis que guardam a posição inicial do jogador
+/* variáveis globais */
+//guardam a posição inicial do jogador
 int x, y;
+int temPilula = 0;
 
 int main(){
 
@@ -18,7 +20,8 @@ int main(){
     encontraMapa(&m, &heroi, HEROI);
 
     do {
-
+        printf("\n");
+        printf("Pilula: %s\n", (temPilula ? "SIM" : "NAO"));
         imprimeMapa(&m);
 
         char comando; // A S D W
@@ -77,6 +80,9 @@ void move(char direcao){
     if(!podeAndar(&m, HEROI, proximoX, proximoY)){
         return;
     }
+    if(ehPersonagem(&m, PILULA, proximoX, proximoY)){
+        temPilula = 1;
+    }
 
     //atualizando a posição do herói e marcar a posição antiga como vazia
     andaNoMapa(&m, heroi.x, heroi.y, proximoX, proximoY);
@@ -127,3 +133,5 @@ void fantasma(){
     }
     liberaMapa(&copia);
 }
+
+//cria a pílula que da super poder ao herói
