@@ -28,7 +28,8 @@ int main(){
         scanf(" %c", &comando);
        
        if(ehDirecao(comando)) move(comando);
-       if(comando == BOMBA) explodePilula();
+       //3 é a quantidade de casas que temos que explodir
+       if(comando == BOMBA) explodePilula(heroi.x, heroi.y, 3);
        fantasma();
 
     }while (!acabou());
@@ -137,15 +138,11 @@ void fantasma(){
 
 //destroi fantasmas à direita por 3 casas, parando o efeito da bomba 
 //caso tenha uma parede
-void explodePilula(){
-     
-     for(int i = 1; i <= 3; i++){
-        if(ehValida(&m, heroi.x, heroi.y+i)){
-            if(ehParede(&m, heroi.x, heroi.y+1)) break;
+void explodePilula(int x, int y, int qtd){
+    
+    if(qtd == 0) return;
 
-            m.matriz[heroi.x][heroi.y+i] = VAZIO;
-        }
-
-     }
+     m.matriz[x][y+1] = VAZIO;
+     explodePilula(x, y+1, qtd-1);
 }
 

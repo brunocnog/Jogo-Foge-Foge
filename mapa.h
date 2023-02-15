@@ -26,6 +26,7 @@ void copiaMapa(MAPA *destino, MAPA *origem);
 int podeAndar(MAPA *m, char personagem, int x, int y);
 int ehParede(MAPA *m, int x, int y);
 int ehPersonagem(MAPA *m, char personagem, int x, int y);
+void explodePilula(int x, int y, int qtd);
 
 struct posicao {
     int x, y;
