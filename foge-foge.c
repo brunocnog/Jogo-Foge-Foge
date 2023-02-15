@@ -27,8 +27,9 @@ int main(){
         char comando; // A S D W
         scanf(" %c", &comando);
        
-        move(comando);
-        fantasma();
+       if(ehDirecao(comando)) move(comando);
+       if(comando == BOMBA) explodePilula();
+       fantasma();
 
     }while (!acabou());
 
@@ -134,4 +135,17 @@ void fantasma(){
     liberaMapa(&copia);
 }
 
-//cria a pílula que da super poder ao herói
+//destroi fantasmas à direita por 3 casas, parando o efeito da bomba 
+//caso tenha uma parede
+void explodePilula(){
+     
+     for(int i = 1; i <= 3; i++){
+        if(ehValida(&m, heroi.x, heroi.y+i)){
+            if(ehParede(&m, heroi.x, heroi.y+1)) break;
+
+            m.matriz[heroi.x][heroi.y+i] = VAZIO;
+        }
+
+     }
+}
+

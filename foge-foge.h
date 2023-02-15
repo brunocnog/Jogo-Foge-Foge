@@ -3,6 +3,7 @@
 #define BAIXO 's'
 #define DIREITA 'd'
 #define ESQUERDA 'a'
+#define BOMBA 'b'
 
 //assinatura das funções
 int acabou();
