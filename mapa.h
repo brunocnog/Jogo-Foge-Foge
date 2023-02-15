@@ -27,6 +27,7 @@ int podeAndar(MAPA *m, char personagem, int x, int y);
 int ehParede(MAPA *m, int x, int y);
 int ehPersonagem(MAPA *m, char personagem, int x, int y);
 void explodePilula(int x, int y, int qtd);
+void explodePilula2(int x, int y, int somaX, int somaY, int qtd);
 
 struct posicao {
     int x, y;

@@ -140,9 +140,27 @@ void fantasma(){
 //caso tenha uma parede
 void explodePilula(int x, int y, int qtd){
     
-    if(qtd == 0) return;
+    //retorna zero, se o jogador não tiver pílula
+    if(!temPilula) return;
 
-     m.matriz[x][y+1] = VAZIO;
-     explodePilula(x, y+1, qtd-1);
+    explodePilula2(heroi.x, heroi.y, 0, 1, 3);
+    explodePilula2(heroi.x, heroi.y, 0, -1, 3);
+    explodePilula2(heroi.x, heroi.y, 1, 0, 3);
+    explodePilula2(heroi.x, heroi.y, -1, 0, 3);
+
+    //tira a pílula que acabou de usar
+    temPilula = 0;
 }
 
+void explodePilula2(int x, int y, int somaX, int somaY, int qtd){
+    
+    if(qtd == 0) return;
+    int novoX = x + somaX;
+    int novoY = y + somaY;
+
+    if(!ehValida(&m, novoX, novoY)) return;
+    if(ehParede(&m, novoX, novoY)) return;
+
+     m.matriz[novoX][novoY] = VAZIO;
+     explodePilula2(novoX, novoY, somaX, somaY, qtd-1);
+}
