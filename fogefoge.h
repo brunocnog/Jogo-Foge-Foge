@@ -1,3 +1,6 @@
+#ifndef _FOGEFOGE_H_
+#define _FOGEFOGE_H_
+
 //Constantes
 #define CIMA 'w'
 #define BAIXO 's'
@@ -11,3 +14,5 @@ void move(char direcao);
 int ehDirecao(char direcao);
 void fantasma();
 int praOndeFantasmaVai(int xAtual, int yAtual, int *xDestino, int *yDestino);
+
+#endif

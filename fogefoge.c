@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "foge-foge.h"
+#include "fogefoge.h"
 #include "mapa.h"
+#include "ui.h"
 
 //struct mapa MAPA
 MAPA m;
@@ -11,7 +12,6 @@ POSICAO heroi;
 
 /* variáveis globais */
 //guardam a posição inicial do jogador
-int x, y;
 int temPilula = 0;
 
 int main(){
@@ -28,8 +28,8 @@ int main(){
         scanf(" %c", &comando);
        
        if(ehDirecao(comando)) move(comando);
-       //3 é a quantidade de casas que temos que explodir
-       if(comando == BOMBA) explodePilula(heroi.x, heroi.y, 3);
+       if(comando == BOMBA) explodePilula();
+       
        fantasma();
 
     }while (!acabou());
@@ -56,10 +56,7 @@ int ehDirecao(char direcao){
 
 void move(char direcao){
 
-    if(!ehDirecao(direcao))
-        return;
-
-    //variável auxiliar que guarda a próxima posição do herói para validação
+   //variável auxiliar que guarda a próxima posição do herói para validação
     int proximoX = heroi.x;
     int proximoY = heroi.y;
 
@@ -138,20 +135,6 @@ void fantasma(){
 
 //destroi fantasmas à direita por 3 casas, parando o efeito da bomba 
 //caso tenha uma parede
-void explodePilula(int x, int y, int qtd){
-    
-    //retorna zero, se o jogador não tiver pílula
-    if(!temPilula) return;
-
-    explodePilula2(heroi.x, heroi.y, 0, 1, 3);
-    explodePilula2(heroi.x, heroi.y, 0, -1, 3);
-    explodePilula2(heroi.x, heroi.y, 1, 0, 3);
-    explodePilula2(heroi.x, heroi.y, -1, 0, 3);
-
-    //tira a pílula que acabou de usar
-    temPilula = 0;
-}
-
 void explodePilula2(int x, int y, int somaX, int somaY, int qtd){
     
     if(qtd == 0) return;
@@ -163,4 +146,18 @@ void explodePilula2(int x, int y, int somaX, int somaY, int qtd){
 
      m.matriz[novoX][novoY] = VAZIO;
      explodePilula2(novoX, novoY, somaX, somaY, qtd-1);
+}
+
+void explodePilula(){
+    
+    //retorna zero, se o jogador não tiver pílula
+    if(!temPilula) return;
+
+    explodePilula2(heroi.x, heroi.y, 0, 1, 3);
+    explodePilula2(heroi.x, heroi.y, 0, -1, 3);
+    explodePilula2(heroi.x, heroi.y, 1, 0, 3);
+    explodePilula2(heroi.x, heroi.y, -1, 0, 3);
+
+    //tira a pílula que acabou de usar
+    temPilula = 0;
 }

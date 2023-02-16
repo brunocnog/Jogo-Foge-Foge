@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "mapa.h"
-//#include "foge-foge.h"
+#include "fogefoge.h"
+#include "ui.h"
 
 void leMapa(MAPA *m){
 
@@ -42,13 +43,6 @@ void liberaMapa(MAPA *m){
         free(m->matriz[i]);
     }
     free(m->matriz);
-}
-
-void imprimeMapa(MAPA *m){
-
-    for(int i = 0; i < m->linhas; i++){
-        printf("%s\n", m->matriz[i]);
-    }
 }
 
 //função alterada de void para int, a fim de devolver um inteiro para ser tratado
